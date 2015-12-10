@@ -88,9 +88,9 @@ public class Hexadecimal implements Comparable {
 	}
 	//Otherwise, tests are run for which instance of Comparable o is.
 	else {
-	    //if o is an instance of Hexadecimal, o is typecasted to a
+	    //If o is an instance of Hexadecimal, o is typecasted to a
 	    //Hexadecimal, and the decimal numbers of each Hexadecimal
-	    //are compared
+	    //are compared.
 	    if (o instanceof Hexadecimal) {
 		Hexadecimal x = (Hexadecimal)o;
 		if (_decNum == x._decNum) {
@@ -103,10 +103,10 @@ public class Hexadecimal implements Comparable {
 		    ret = 1;
 		}
 	    }
-	    //if o is an instance of Binary, o is typecasted to Binary
+	    //If o is an instance of Binary, o is typecasted to Binary
 	    //and using the binToDec method from Binary, the Binary number
-	    //of o is changed to a decimal and stored in int a
-	    //the decimal number of this Hexadecimal is compared to int a
+	    //of o is changed to a decimal and stored in int a.
+	    //The decimal number of this Hexadecimal is compared to int a.
 	    else if (o instanceof Binary) {
 		int a = Binary.binToDec(((Binary)o).toString());
 		Hexadecimal x = new Hexadecimal(a);
@@ -120,13 +120,13 @@ public class Hexadecimal implements Comparable {
 		    ret = 1;
 		}
 	    }
-	    //if o is an instance of Rational, o is typecasted to Rational and
+	    //If o is an instance of Rational, o is typecasted to Rational and
 	    //a new Rational is created with the decimal number of this 
-	    //Hexadecimal as the numerator and 1 as the denominator
-	    //the numerator of the first Rational is multiplied by the 
+	    //Hexadecimal as the numerator and 1 as the denominator.
+	    //The numerator of the first Rational is multiplied by the 
 	    //denominator of the second and the numerator of the second
-	    //is multiplied by the denominator of the first
-	    //these new numerators are then compared
+	    //is multiplied by the denominator of the first.
+	    //These new numerators are then compared.
 	    else if (o instanceof Rational) {
 		int thisNumerator, otherNumerator, num1, denom1, num2, denom2;
 		Rational x = new Rational(_decNum,1);
