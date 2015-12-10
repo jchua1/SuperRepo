@@ -1,23 +1,12 @@
-/*
-  Team W-Fd -- Jason Chua, Dhruba Roy
-  APCS1 pd9
-  HW37 -- Rational Equality
-  2015-11-24
-*/
-
 public class Rational {
 
-    //instance variables for numerator and denominator
     private int num, denom;
 
-    //default constructor that sets numerator to 0 and denominator to 1
     public Rational() {
 	num = 0;
 	denom = 1;
     }
 
-    //overloaded constructor that takes two arguments to set numerator and denominator
-    //if given denominator is 0, numerator is set to 0 and denominator is set to 1 instead
     public Rational(int x, int y) {
 	this();
 	if (y == 0) {
@@ -29,53 +18,36 @@ public class Rational {
 	}
     }
 
-    //returns numerator and denominator separated by a /
     public String toString() {
 	String retStr = "";
 	retStr += num + "/" + denom;
 	return retStr;
     }
 
-    //returns floating point value of the number by changing numerator to double and then dividing by the denominator
     public double floatValue() {
         return ((double)num / denom);
     }
 
-    //multiplies the numerator and denominator by those of the given Rational
     public void multiply(Rational x) {
         num *= x.num;
 	denom *= x.denom;
     }
 
-    //divides the numerator and denominator by those of the given Rational
     public void divide(Rational x) {
         num *= x.denom;
 	denom *= x.num;
     }
 
-    //num becomes the sum of two products
-    //first prod: this numerator and the given Rational's denominator
-    //second prod: the given Rational's numerator and this denominator
-    //this denominator becomes the product of this one and the other one
     public void add(Rational x) {
         num = (num * x.denom) + (x.num * denom);
         denom *= x.denom;
     }
 
-    //num becomes the difference between two products
-    //first prod: this numerator and the given Rational's denominator
-    //second prod: the given Rational's numerator and this denominator
-    //this denominator becomes the product of this one and the other one
     public void subtract(Rational x) {
         num = (num * x.denom) - (x.num * denom);
         denom *= x.denom;
     }
 
-    //uses local variables to store num and denom so that they are not altered
-    //divides tracker by b and if the remainder is not 0,
-    //tracker is set to the value of a, a to b, and b to the remainder
-    //process is continued until b, the remainder, is 0
-    //if b is 0, then a is the gcd
     public int gcd(){
 	int tracker = num;
 	int a = num;
@@ -88,9 +60,6 @@ public class Rational {
 	return a;
     }
 
-    //stores value of gcd() in var gcd so that it need not be run more than once
-    //if the gcd is not 1, then both num and denom are divided by it
-    //otherwise, nothing is changed
     public void reduce() {
 	int gcd = gcd();
 	if (gcd != 1) {
@@ -99,11 +68,6 @@ public class Rational {
 	}
     }
 
-    //overloaded gcd method that takes two integers
-    //divides tracker by d and if the remainder is not 0,
-    //tracker is set to the value of n, n to d, and d to the remainder
-    //process is continued until d, the remainder, is 0
-    //if d is 0, then n is the gcd
     public static int gcd(int n, int d) {
 	int tracker = n;
 	while (d != 0) {
@@ -114,26 +78,28 @@ public class Rational {
 	return n;
     }
 
-    //stores floatValues of calling Rational and given Rational in vars r1 and r2
-    //if r1 == r2, then 0 is returned
-    //if r1 > r2, then 1 is returned
-    //if r1 < r2, then -1 is returned
-    public int compareTo(Rational x) {
+    public int compareTo(Object o) {
 	int thisNumerator, otherNumerator;
-	thisNumerator = num * x.denom;
-	otherNumerator = denom * x.num;
+	if (!(o instanceof Rational)) {
+	    throw new ClassCastException("\ncompareTo() input not a Rational");
+	}
+	if (o == null) {
+	    throw new NullPointerException("\ncompareTo() input is null");
+	}
+	else {
+	    Rational x = (Rational)o;
+	    thisNumerator = num * x.denom;
+	    otherNumerator = denom * x.num;
+	}
 	return thisNumerator - otherNumerator;
     }
 
     //overridden equals method
     public boolean equals(Object x) {
-	//initializes retVal to boolean result of this == x
         boolean retVal = this == x;
-	//if retVal is true, the if statement is not run and retVal is returned
+
         if (!retVal) {
-	    //retVal becomes the boolean result of 
-	    //whether x is an instance of rational
-	    //and the comparison of the rationals is 0
+
             retVal = x instanceof Rational
                 && (this.compareTo((Rational)x) == 0);
         }
