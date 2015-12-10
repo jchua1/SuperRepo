@@ -104,7 +104,7 @@ public class SuperArray {
 	//Iterates through the array until the second to last element. Compares
 	//one element to the next using compareTo. If the result of compareTo 
 	//is positive, meaning the current element is greater than the next,
-	//false is returned. True is returned if the array is completely
+	//then false is returned. True is returned if the array is completely
 	//iterated through, meaning that all Comparables are less than the one
 	//on the immediate right.
 	for (int i = 0; i < _size-1; i++) {
