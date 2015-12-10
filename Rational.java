@@ -1,4 +1,11 @@
-public class Rational {
+/*
+  Jason Chua
+  APCS1 pd9
+  HW45 -- Come Together
+  2015-12-09
+*/
+
+public class Rational implements Comparable {
 
     private int num, denom;
 
@@ -16,6 +23,14 @@ public class Rational {
 	    num = x;
 	    denom = y;
 	}
+    }
+    
+    public int getNum() {
+	return num;
+    }
+
+    public int getDenom() {
+	return denom;
     }
 
     public String toString() {
@@ -79,101 +94,60 @@ public class Rational {
     }
 
     public int compareTo(Object o) {
+	int ret = 0;
 	int thisNumerator, otherNumerator;
-	if (!(o instanceof Rational)) {
-	    throw new ClassCastException("\ncompareTo() input not a Rational");
+	//If o is not an instance of Comparable, a ClassCastException is thrown.
+	if (!(o instanceof Comparable)) {
+	    throw new ClassCastException("\ncompareTo() input not a Comparable");
 	}
+	//If o is null, a NullPointerException is thrown.
 	if (o == null) {
 	    throw new NullPointerException("\ncompareTo() input is null");
 	}
+	//Otherwise, tests are run for which instance of Comparable o is.
 	else {
-	    Rational x = (Rational)o;
-	    thisNumerator = num * x.denom;
-	    otherNumerator = denom * x.num;
+	    //If o is an instance of Rational, o is typecasted to a Rational.
+	    //The numerator of this Rational is multiplied by the denominator
+	    //of the other and the numerator of the other is multiplied by the 
+	    //numerator of this one.
+	    if (o instanceof Rational) {
+		Rational x = (Rational)o;
+		thisNumerator = num * x.denom;
+		otherNumerator = denom * x.num;
+		ret = thisNumerator - otherNumerator;
+	    }
+	    //If o is an instance of Binary, o is typecasted to Binary and 
+	    //using the binToDec method from Binary, the Binary number of o
+	    //is changed to a decimal and used as the numerator for a new
+	    //Rational. The process for the previous case is then repeated.
+	    else if (o instanceof Binary) {
+	        Rational x = new Rational(Binary.binToDec
+					  (((Binary)o).toString()),1);
+		thisNumerator = num * x.denom;
+		otherNumerator = denom * x.num;
+		ret = thisNumerator - otherNumerator;
+	    }
+	    //If o is an instance of Hexadecimal, o is typecasted to Hexadecimal
+	    //and using the hexToDec method from Hexadecimal, the Hexadecimal 
+	    //number of o is changed to a decimal and used as the numerator for
+	    //a new Rational. The process for the first case is then repeated.
+	    else if (o instanceof Hexadecimal) {
+		Rational x = new Rational(Hexadecimal.hexToDec
+					  (((Hexadecimal)o).toString()),1);
+		thisNumerator = num * x.denom;
+		otherNumerator = denom * x.num;
+		ret = thisNumerator - otherNumerator;
+	    }
 	}
-	return thisNumerator - otherNumerator;
+	return ret;
     }
 
-    //overridden equals method
     public boolean equals(Object x) {
         boolean retVal = this == x;
-
         if (!retVal) {
-
             retVal = x instanceof Rational
                 && (this.compareTo((Rational)x) == 0);
         }
         return retVal;
-    }
-
-    public static void main(String[] args){
-	Rational r = new Rational(2,3);
-	Rational s = new Rational(1,2);
-	System.out.println(r.floatValue());
-	System.out.println(s.floatValue());
-	r.multiply(s);
-	System.out.println(r);
-	System.out.println(s);
-	System.out.println(r.floatValue());
-
-	Rational t = new Rational();
-	Rational u = new Rational(1,0);
-	Rational v = new Rational(5,1);
-	System.out.println(t);
-	System.out.println(u);
-	System.out.println(v);
-	System.out.println(v.floatValue());
-	u.divide(v);
-	System.out.println(u);
-
-        Rational a = new Rational(2,5);
-        Rational b = new Rational(1,3);
-        a.add(b);
-        System.out.println(a);
-
-        Rational x = new Rational(2,5);
-        Rational y = new Rational(1,3);
-        x.subtract(y);
-        System.out.println(x);
-
-	Rational c = new Rational(36,45);
-	Rational d = new Rational(45,36);
-	System.out.println(c.gcd());
-	System.out.println(d.gcd());
-	c.reduce();
-	System.out.println(c);
-
-	Rational e = new Rational(2,5);
-	e.reduce();
-	System.out.println(e);
-
-	Rational f = new Rational(2,3);
-	Rational g = new Rational(1,2);
-	Rational h = new Rational(4,18);
-	f.add(g);
-	System.out.println(f);
-	System.out.println(g);
-	h.reduce();
-	System.out.println(h);
-
-	System.out.println(gcd(2,5));
-	System.out.println(gcd(3,6));
-	System.out.println(gcd(36,45));
-
-	Rational i = new Rational(1,2);
-	Rational j = new Rational(2,3);
-	System.out.println(j.compareTo(i));
-	System.out.println(i.compareTo(j));
-	Rational k = new Rational(1,2);
-	Rational l = new Rational(2,4);
-	System.out.println(i.compareTo(k));
-	System.out.println(k.compareTo(l));
-
-	Rational m = new Rational(-1,2);
-	Rational n = new Rational(2,-4);
-	System.out.println(i.equals(k));
-	System.out.println(k.equals(l));
-	System.out.println(j.equals(k));
-	System.out.println(m.equals(n));
     }
 }
